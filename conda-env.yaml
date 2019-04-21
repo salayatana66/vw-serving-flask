@@ -1,0 +1,16 @@
+name: vwFlask
+dependencies:
+  - python=3.6
+  - flask
+  - jinja2
+  - numpy
+  - click
+  - pyyaml
+  # emacs bound
+  - jedi
+  - autopep8
+  - flake8
+  - yapf
+  - pylint
+
+# conda env create -f conda-env.yaml

@@ -1,0 +1,31 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: vwserver-fake-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: vwserver
+    spec:
+      securityContext:
+        runAsUser: 1001
+      containers:
+        - name: fake-vwserver
+          image: andrejschioppa/vw_serving_flask:ubuntu_v1
+          imagePullPolicy: "IfNotPresent"
+          command: [ "/bin/bash", "-c", "--" ]
+          args: [ "while true; do sleep 30; done;" ]
+          volumeMounts:
+            - mountPath: /vw_models
+              name: vwserver-vol1
+      volumes:
+        - name: vwserver-vol1
+          persistentVolumeClaim:
+            claimName: vwserver-claim
+
+
+
+
+

@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vwserver-deployment
+spec:
+  selector:
+    matchLabels:
+      run: vwserver
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: vwserver
+        run: vwserver
+    spec:        
+      securityContext:
+        runAsUser: 1001
+      containers:
+        - name: vwserver-test-model
+          image: andrejschioppa/vw_serving_flask:ubuntu_v1
+          imagePullPolicy: "IfNotPresent"
+          ports:
+            - containerPort: 6025
+          env:
+            - name: MODEL_FILE
+              value: "/vw_models/test_model.model"
+            - name: MODEL_CONF
+              value: "/vw_models/test_conf.json"
+            - name: MODEL_PORT
+              value: "6025"
+          volumeMounts:
+            - mountPath: /vw_models
+              name: vwserver-vol1
+      volumes:
+        - name: vwserver-vol1
+          persistentVolumeClaim:
+            claimName: vwserver-claim
+
+

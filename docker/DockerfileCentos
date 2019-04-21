@@ -1,0 +1,51 @@
+FROM centos:7
+
+# Here some optional proxy configurations
+
+
+# Compiling from sources is goint to be painful
+# as we need to update several commands
+RUN yum -y update \
+	&& yum -y install epel-release \
+	&& yum -y install centos-release-scl \
+	&& yum install -y zlib-devel zlib-static \
+	&& yum -y install devtoolset-7 devtoolset-7-gcc-c++ \
+	devtoolset-7-make \
+ 	&& yum -y install boost-devel.x86_64 libboost-all-dev \ 
+           libboost-program-options-dev cmake3 git \
+ 	&& yum clean all -y
+
+# cloning the original repo
+RUN git clone https://github.com/JohnLangford/vowpal_wabbit.git
+
+# adding new compilation tools to PATH
+RUN ln -s /usr/bin/cmake3 /opt/rh/devtoolset-7/root/usr/bin/cmake
+ENV PATH="/opt/rh/devtoolset-7/root/bin:/opt/rh/devtoolset-7/root/usr/bin:${PATH}"
+
+# building vowpal wabbit
+RUN cd vowpal_wabbit && scl enable devtoolset-7 bash \
+&& make && make install && make clean
+
+RUN yum -y install https://centos7.iuscommunity.org/ius-release.rpm \
+ && yum -y install python36u-pip && yum clean all -y
+
+# Python dependencies
+COPY docker/requirements.txt .
+RUN pip3.6 install --upgrade pip
+RUN pip3.6 install -r requirements.txt
+
+# Add the vwserver user
+RUN mkdir /home/vwserver
+RUN useradd vwserver -s /bin/bash -u 1001 \
+    -d /home/vwserver 
+RUN  chown 1001:1001 -R /home/vwserver 
+RUN  mkdir /vw_models && \
+     chown 1001:1001 -R /vw_models && \
+     chmod u+rw -R /vw_models
+
+# Transfer serving libraries and entrypoint
+COPY --chown=vwserver flaskserver /home/vwserver/flaskserver
+COPY --chown=vwserver vwmodel /home/vwserver/vwmodel
+COPY --chown=vwserver docker/start_server.sh /home/vwserver
+
+ENTRYPOINT ["/home/vwserver/start_server.sh"]

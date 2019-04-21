@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: vwserver-service
+  labels:
+    run: vwserver
+spec:
+  ports:
+  - port: 6025
+    protocol: TCP
+  selector:
+    run: vwserver

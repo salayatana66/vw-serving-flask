@@ -1,0 +1,6 @@
+{"target": 0.5, "label": "lab_0", "namespaces": {"a": {"x1": "a", "x2": 0.814}, "b": {"x3": "r", "x4": "f"}}}
+{"target": 0.5, "label": "lab_1", "namespaces": {"a": {"x1": "a", "x2": 0.819}, "b": {"x3": "r", "x4": "g"}}}
+{"target": 0.7311, "label": "lab_2", "namespaces": {"a": {"x1": "c", "x2": 0.306}, "b": {"x3": "r", "x4": "g"}}}
+{"target": 0.5, "label": "lab_3", "namespaces": {"a": {"x1": "a", "x2": 0.872}, "b": {"x3": "r", "x4": "f"}}}
+{"target": 0.5, "label": "lab_4", "namespaces": {"a": {"x1": "b", "x2": 0.718}, "b": {"x3": "r", "x4": "f"}}}
+{"target": 0.7311, "label": "lab_5", "namespaces": {"a": {"x1": "b", "x2": 0.422}, "b": {"x3": "r", "x4": "h"}}}
