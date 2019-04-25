@@ -1,7 +1,9 @@
 # Vowpal Wabbit Serving Flask
 
 Bringing models trained with [Vowpal Wabbit](https://github.com/VowpalWabbit/vowpal_wabbit/wiki)
-(VW) to production using Docker & Kubernetes. There will soon be a companion blogpost :).
+(VW) to production using Docker & Kubernetes. 
+
+More information can be found in this [blogpost](https://medium.com/p/serving-vowpal-wabbit-models-on-kubernetes-de0ed968f3b0?source=email-8f715d285c26--writer.postDistributed&sk=a132a4fcbaf00270f0ab45017eb4e304).
 
 ## Approach
 
@@ -18,8 +20,6 @@ why I did not use a Java Native Interface solution).
 * Using a Python Wrapper to use the original VW command for serving.
 
 * Scalability via Kubernetes.
-
-You can read more in this (!! forthcoming !!) blogpost.
 
 ## Repository structure
 
